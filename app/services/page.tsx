@@ -158,7 +158,7 @@ const servicesData: Service[] = [
   },
   {
     id: 9,
-    icon: <Megaphone size={24}/>,
+    icon: <Megaphone size={24} />,
     bgColor: "bg-pink-500",
     title: "Digital Marketing",
     desc: "Branding, SEO, performance marketing and social media strategy for lead generation.",
@@ -174,7 +174,7 @@ const servicesData: Service[] = [
   },
   {
     id: 10,
-    icon: <Users size={24}/>,
+    icon: <Users size={24} />,
     bgColor: "bg-blue-600",
     title: "Resource Management",
     desc: "Optimize allocation and performance of internal and outsourced teams.",
@@ -236,13 +236,19 @@ export default function ServicePage() {
                   href="https://cal.com/solvmate/consult"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-8 py-3 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full font-semibold text-white hover:from-blue-500 hover:to-blue-600 transition transform hover:scale-105 shadow-lg"
+                  className="px-8 py-3 bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl font-semibold text-white hover:from-blue-500 hover:to-blue-600 transition transform hover:scale-105 shadow-lg"
                 >
                   Book a diagnostic call
                 </a>
-                <button className="px-8 py-3 border-2 border-white rounded-full font-semibold text-white hover:bg-white/10 transition">
+                <a
+                  href="/contact"
+                  target=""
+                  rel="noopener noreferrer"
+                  className="px-8 py-3 border-2 border-white rounded-2xl font-semibold text-white hover:bg-white/10 transition"
+                >
                   Request a proposal
-                </button>
+                </a>
+                {/*  */}
               </div>
             </div>
           </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { calculateDaysInAction } from "../utils/daysInAction";
 
 export default function AboutPage() {
   const [displayText, setDisplayText] = useState("growth");
@@ -12,6 +13,8 @@ export default function AboutPage() {
 
     return () => clearTimeout(timer);
   }, []);
+
+   const daysInAction = calculateDaysInAction();
 
   return (
     <div className="pt-32 pb-20 px-6">
@@ -31,36 +34,36 @@ export default function AboutPage() {
             Who We Are
           </h4>
           <p className="text-lg text-gray-900 leading-relaxed">
-            SolvMate is more than a consulting firm—we're your growth engine and
+            {`SolvMate is more than a consulting firm—we're your growth engine and
             your startup's best mate. Founded with a vision to empower emerging
             businesses, we've evolved into a comprehensive solution provider
-            that combines strategic consulting with cutting-edge technology.
+            that combines strategic consulting with cutting-edge technology.`}
           </p>
           <h4 className="text-4xl md:text-4xl font-bold leading-tight mb-6 text-gray-900">
             Our Mission
           </h4>
           <p className="text-lg text-gray-900 leading-relaxed">
-            We exist to solve bottlenecks. Every startup faces challenges that
+            {`We exist to solve bottlenecks. Every startup faces challenges that
             slow growth and drain resources. Our mission is to identify,
             analyze, and eliminate these obstacles through innovative solutions
             and strategic guidance. We don't just advise—we partner with you to
-            ensure sustainable success.
+            ensure sustainable success.`}
           </p>
           <h4 className="text-4xl md:text-4xl font-bold leading-tight mb-6 text-gray-900">
             What Sets Us Apart
           </h4>
           <p className="text-lg text-gray-900 leading-relaxed">
-            Our unique blend of technology and consulting expertise makes us
+            {`Our unique blend of technology and consulting expertise makes us
             different. We've pioneered India's first Virtual CEO service,
             developed powerful automation tools, and created frameworks that
-            have helped 15 companies across 3+ geographies achieve their growth
-            objectives. With 651 days of proven excellence, we bring both
-            experience and innovation to every engagement.
+            have helped 7 companies across, 3+ geographies achieve their growth
+            objectives. With ${daysInAction} days of proven excellence, we bring both
+            experience and innovation to every engagement.`}
           </p>
         </div>
 
         {/* Three Cards Section */}
-        <div className="py-20 bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 px-6 overflow-hidden relative">
+        <div className="py-20 rounded-3xl bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 px-6 overflow-hidden relative">
           {/* Animated Background Blobs */}
           <div className="absolute inset-0 overflow-hidden opacity-10">
             <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
@@ -108,8 +111,8 @@ export default function AboutPage() {
                   Partnership Mindset
                 </h3>
                 <p className="text-gray-100 text-base md:text-lg leading-relaxed relative z-10">
-                  Your success is our success. We're invested in your long-term
-                  growth, not just quick fixes.
+                  {`Your success is our success. We're invested in your long-term
+                  growth, not just quick fixes.`}
                 </p>
               </div>
             </div>

@@ -15,7 +15,7 @@ export default function ProductPage() {
           </div>
         </div>
         {/* Three Cards Section */}
-        <div className="py-20 bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 px-6 overflow-hidden relative">
+        <div className="rounded-3xl py-20 bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 px-6 overflow-hidden relative">
           {/* Animated Background Blobs */}
           <div className="absolute inset-0 overflow-hidden opacity-10">
             <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
@@ -82,7 +82,7 @@ export default function ProductPage() {
                 </p>
                 <div className="pb-6 border-b border-white/10" />
                 <p className="text-gray-100 text-base md:text-lg leading-relaxed relative z-10 pt-4">
-                  Pioneering the future of computing at Kannakilabs. Our research and development division focuses on neuromorphic computing and next-generation AI technologies. We develop cutting-edge solutions that push the boundaries of what's possible in machine learning, cognitive computing, and intelligent systems.
+                  {`Pioneering the future of computing at Kannakilabs. Our research and development division focuses on neuromorphic computing and next-generation AI technologies. We develop cutting-edge solutions that push the boundaries of what's possible in machine learning, cognitive computing, and intelligent systems.`}
                 </p>
               </div>
             </div>

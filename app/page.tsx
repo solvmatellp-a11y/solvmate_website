@@ -1,366 +1,333 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react-hooks/set-state-in-effect */
-'use client'
+/* eslint-disable react/no-unescaped-entities */
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { Menu, X, Eye, EyeOff } from 'lucide-react';
-import HomePage from './homePageContent';
-import AboutPage from './aboutPageContent';
-import ServicePage from './servicesPageContent';
-import ContactPage from './contactPageContent';
-import ProductPage from './productPageConten';
+import React from "react";
+import {
+  ArrowRight,
+  Zap,
+  BarChart3,
+  Users,
+  TrendingUp,
+  Activity,
+  Target,
+  Cog,
+} from "lucide-react";
+import { calculateDaysInAction } from "./utils/daysInAction";
 
-export default function SolvMate() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [showAuthModal, setShowAuthModal] = useState(false);
-  const [isSignIn, setIsSignIn] = useState(true);
-  const [showPassword, setShowPassword] = useState(false);
-  const [currentPage, setCurrentPage] = useState('home');
-  const [formData, setFormData] = useState({ email: '', password: '', name: '' });
-  const [users, setUsers] = useState<any[]>([]);;
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loggedInUser, setLoggedInUser] = useState<any>(null);
-  const [authMessage, setAuthMessage] = useState('');
+interface HomePageProps {
+  setCurrentPage: (page: string) => void;
+}
 
-  // Load users from localStorage on mount
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const storedUsers = localStorage.getItem('solvmate_users');
-      const storedLoggedInUser = localStorage.getItem('solvmate_logged_in_user');
-      
-      if (storedUsers) {
-        setUsers(JSON.parse(storedUsers));
-      }
-      if (storedLoggedInUser) {
-        setIsLoggedIn(true);
-        setLoggedInUser(JSON.parse(storedLoggedInUser));
-      }
-    }
-  }, []);
+export default function HomePage({ setCurrentPage }: HomePageProps) {
 
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     if (window.scrollY > 1000 && !showAuthModal && currentPage === 'home') {
-  //       setShowAuthModal(true);
-  //     }
-  //   };
-
-  //   window.addEventListener('scroll', handleScroll);
-  //   return () => window.removeEventListener('scroll', handleScroll);
-  // }, [showAuthModal, currentPage]);
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    
-    if (isSignIn) {
-      const user = users.find(u => u.email === formData.email && u.password === formData.password);
-      if (user) {
-        setIsLoggedIn(true);
-        setLoggedInUser(user);
-        if (typeof window !== 'undefined') {
-          localStorage.setItem('solvmate_logged_in_user', JSON.stringify(user));
-        }
-        setAuthMessage('Sign in successful!');
-        setShowAuthModal(false);
-        setFormData({ email: '', password: '', name: '' });
-        setTimeout(() => setAuthMessage(''), 3000);
-      } else {
-        setAuthMessage('Invalid email or password');
-        setTimeout(() => setAuthMessage(''), 3000);
-      }
-    } else {
-      if (!formData.name || !formData.email || !formData.password) {
-        setAuthMessage('Please fill all fields');
-        setTimeout(() => setAuthMessage(''), 3000);
-        return;
-      }
-      
-      const existingUser = users.find(u => u.email === formData.email);
-      if (existingUser) {
-        setAuthMessage('Email already registered');
-        setTimeout(() => setAuthMessage(''), 3000);
-        return;
-      }
-      
-      const newUser = { id: Date.now(), name: formData.name, email: formData.email, password: formData.password };
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const updatedUsers: any = [...users, newUser];
-      setUsers(updatedUsers);
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('solvmate_users', JSON.stringify(updatedUsers));
-      }
-      setAuthMessage('Registration successful! Please sign in');
-      setIsSignIn(true);
-      setFormData({ email: formData.email, password: formData.password, name: '' });
-      setTimeout(() => setAuthMessage(''), 3000);
-    }
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setLoggedInUser(null);
-    setFormData({ email: '', password: '', name: '' });
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('solvmate_logged_in_user');
-    }
-  };
+  const daysInAction = calculateDaysInAction();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-blue-100 text-gray-900 overflow-hidden" style={{backgroundImage: 'linear-gradient(135deg, #ffffff 0%, #f0f4f8 50%, #e8f1f8 100%)'}}>
-      <div className="fixed inset-0 -z-10">
-        <div className="absolute top-20 left-10 w-96 h-96 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob bg-blue-900"></div>
-        <div className="absolute top-40 right-10 w-96 h-96 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-2s bg-blue-800"></div>
-        <div className="absolute bottom-1/2 left-1/3 w-80 h-80 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-4s bg-blue-900"></div>
+    <>
+      {/* Hero Section with Blue Background */}
+      <div className="relative min-h-screen bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 overflow-hidden flex items-center pt-32">
+        {/* Background pattern */}
+        <div className="absolute inset-0 overflow-hidden opacity-10">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
+          <div className="absolute top-0 right-1/4 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000" />
+          <div className="absolute -bottom-8 left-1/2 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000" />
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 w-full">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left side - Text content */}
+            <div className="space-y-8">
+              <div className="inline-block">
+                <div className="px-4 py-2 backdrop-blur-xl rounded-full text-sm font-semibold bg-blue-100/20 border border-blue-400/50 text-blue-200">
+                  Strategy & Growth
+                </div>
+              </div>
+
+              <h1 className="text-5xl lg:text-6xl font-bold leading-tight text-white">
+                SolvMate - Your Growth Engine
+                {/* <span className="text-blue-300">
+                  {" "}
+                  repeatable, measurable, and customer-first
+                </span> */}
+              </h1>
+              <h2 className="lg:text-3xl text-cyan-300">Startup's best mate</h2>
+
+              <p className="text-lg text-gray-100 leading-relaxed max-w-xl">
+                We're not just consultants - we're your growth partners.
+                SolvMate empowers startups to overcome challenges, scale
+                operations, and achieve sustainable success through strategic
+                guidance and innovative solutions.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <a
+                  href="/contact"
+                  target=""
+                  rel="noopener noreferrer"
+                  className="px-8 py-3 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg font-semibold text-white hover:from-blue-500 hover:to-blue-600 transition transform hover:scale-105 shadow-lg text-center"
+                >
+                  Let's build a plan
+                </a>
+                <a
+                  href="/services"
+                  target=""
+                  rel="noopener noreferrer"
+                  className="px-8 py-3 border-2 border-white rounded-lg font-semibold text-white hover:bg-white/10 transition flex items-center justify-center gap-2"
+                >
+                 See how we work <ArrowRight size={18} />
+                </a>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-6 pt-8 text-sm">
+                <div>
+                  <p className="font-semibold text-white">
+                    Trusted by B2B SaaS & SMBs
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 text-blue-100">
+                  <div className="h-1 w-8 rounded bg-gradient-to-r from-blue-400 to-blue-300"></div>
+                  <p>Proven 3-6x pipeline improvements</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Right side - Dashboard */}
+            <div className="relative group">
+              <div className="absolute -inset-1 rounded-2xl blur-2xl opacity-0 group-hover:opacity-30 transition duration-500 bg-gradient-to-r from-blue-600 to-cyan-500"></div>
+
+              <div className="relative backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-8 shadow-2xl">
+                {/* Dashboard Header */}
+                <div className="mb-8 pb-6 border-b border-white/10">
+                  <p className="text-sm font-semibold text-blue-200 uppercase tracking-wider">
+                    Snapshot
+                  </p>
+                  <h3 className="text-3xl font-bold text-white mt-2">
+                    Automated Growth Stack
+                  </h3>
+                </div>
+
+                {/* Dashboard Stats */}
+                <div className="grid grid-cols-2 gap-4 mb-8">
+                  <div className="backdrop-blur-xl bg-gradient-to-br from-blue-600/30 to-blue-500/20 border border-blue-400/30 rounded-lg p-4 hover:border-blue-400/50 transition">
+                    <div className="flex items-center gap-2 mb-2">
+                      <TrendingUp className="w-4 h-4 text-blue-300" />
+                      <p className="text-xs text-blue-200 uppercase tracking-wider">
+                        Pipeline Growth
+                      </p>
+                    </div>
+                    <p className="text-2xl font-bold text-white">+142%</p>
+                  </div>
+
+                  <div className="backdrop-blur-xl bg-gradient-to-br from-cyan-600/30 to-cyan-500/20 border border-cyan-400/30 rounded-lg p-4 hover:border-cyan-400/50 transition">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Activity className="w-4 h-4 text-cyan-300" />
+                      <p className="text-xs text-cyan-200 uppercase tracking-wider">
+                        Conversion Rate
+                      </p>
+                    </div>
+                    <p className="text-2xl font-bold text-white">+85%</p>
+                  </div>
+                </div>
+
+                {/* Feature List */}
+                <div className="space-y-4 mb-8">
+                  <div className="flex gap-4 group/item">
+                    <div className="w-1 rounded-full bg-gradient-to-b from-blue-400 to-cyan-400 flex-shrink-0"></div>
+                    <div>
+                      <p className="font-semibold text-white">
+                        Sales process mapped & automated
+                      </p>
+                      <p className="text-sm text-gray-300 mt-1">
+                        End-to-end workflows optimized
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4 group/item">
+                    <div className="w-1 rounded-full bg-gradient-to-b from-blue-400 to-cyan-400 flex-shrink-0"></div>
+                    <div>
+                      <p className="font-semibold text-white">
+                        CRM + outreach workflow
+                      </p>
+                      <p className="text-sm text-gray-300 mt-1">
+                        Integrated and connected
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4 group/item">
+                    <div className="w-1 rounded-full bg-gradient-to-b from-blue-400 to-cyan-400 flex-shrink-0"></div>
+                    <div>
+                      <p className="font-semibold text-white">
+                        Measurable KPIs & dashboarding
+                      </p>
+                      <p className="text-sm text-gray-300 mt-1">
+                        Real-time visibility
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4 group/item">
+                    <div className="w-1 rounded-full bg-gradient-to-b from-blue-400 to-cyan-400 flex-shrink-0"></div>
+                    <div>
+                      <p className="font-semibold text-white">
+                        Training for your team
+                      </p>
+                      <p className="text-sm text-gray-300 mt-1">
+                        Delivered and sustained
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Footer */}
+                <div className="pt-6 border-t border-white/10">
+                  <p className="text-sm text-gray-300">
+                    Start with a short diagnostic call — we'll show quick wins
+                    and a 90-day growth plan.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <nav className="fixed w-full top-0 z-50 backdrop-blur-xl bg-white/70 border-b border-blue-200/50">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg flex items-center justify-center backdrop-blur-md bg-gradient-to-br from-blue-900 to-blue-800">
-              <span className="text-white font-bold text-lg">SM</span>
-            </div>
-            <span className="font-bold text-xl text-blue-900">SolvMate</span>
-          </div>
-
-          <div className="hidden md:flex items-center gap-8">
-            <button onClick={() => {setCurrentPage('home'); setMobileMenuOpen(false); setShowAuthModal(false);}} className="text-gray-700 font-medium hover:text-blue-600 transition">Home</button>
-            <button onClick={() => {setCurrentPage('about'); setMobileMenuOpen(false); setShowAuthModal(false);}} className="text-gray-700 font-medium hover:text-blue-600 transition">About</button>
-            <button onClick={() => {setCurrentPage('services'); setMobileMenuOpen(false); setShowAuthModal(false);}} className="text-gray-700 font-medium hover:text-blue-600 transition">Services</button>
-            <button onClick={() => {setCurrentPage('Products'); setMobileMenuOpen(false); setShowAuthModal(false);}} className="text-gray-700 font-medium hover:text-blue-600 transition">Products</button>
-            <button onClick={() => {setCurrentPage('contact'); setMobileMenuOpen(false); setShowAuthModal(false);}} className="text-gray-700 font-medium hover:text-blue-600 transition">Contact</button>
-            
-            {isLoggedIn ? (
-              <div className="flex items-center gap-4">
-                <span className="text-sm font-semibold text-gray-900">Welcome, {loggedInUser.name}!</span>
-                <button onClick={handleLogout} className="px-4 py-2 bg-red-500 text-white rounded-lg font-semibold hover:bg-red-600 transition text-sm">
-                  Logout
-                </button>
-              </div>
-            ) : (
-              <button onClick={() => setShowAuthModal(true)} className="px-4 py-2 bg-gradient-to-br from-blue-900 to-blue-800 text-white rounded-lg font-semibold hover:from-blue-800 hover:to-blue-700 transition text-sm">
-                Sign In
-              </button>
-            )}
-          </div>
-
-          <button 
-            className="md:hidden text-blue-900"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+      {/* solving your bottle neck section */}
+      <div className="relative pt-20 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-8 text-gray-900">
+            Solving Your Bottlenecks
+          </h2>
+          <h3
+            className="text-3xl font-bold text-center mb-8"
+            style={{ color: "#335799" }}
           >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+            That's What We Do
+          </h3>
+          <p className="text-lg text-center mb-8">
+            Every startup faces unique challenges—whether it's scaling
+            operations, optimizing sales funnels, or structuring for growth. At
+            SolvMate, we specialize in identifying and eliminating these
+            bottlenecks. Our blend of cutting-edge technology solutions and
+            expert consulting transforms obstacles into opportunities.
+          </p>
+          <p className="text-lg text-center">
+            We combine deep industry expertise with innovative tech solutions to
+            provide end-to-end support. From strategic planning to execution,
+            from automation to analytics, we're equipped to handle every aspect
+            of your growth journey. Our proven methodologies and proprietary
+            tools ensure you're not just keeping up with the competition—you're
+            leading the pack.
+          </p>
         </div>
+      </div>
 
-        {mobileMenuOpen && (
-          <div className="md:hidden backdrop-blur-xl bg-white/70 border-t border-blue-200/50 p-4 space-y-4">
-            <button onClick={() => {setCurrentPage('home'); setMobileMenuOpen(false); setShowAuthModal(false);}} className="block w-full text-left text-gray-700 font-medium hover:text-blue-600 transition">Home</button>
-            <button onClick={() => {setCurrentPage('about'); setMobileMenuOpen(false); setShowAuthModal(false);}} className="block w-full text-left text-gray-700 font-medium hover:text-blue-600 transition">About</button>
-            <button onClick={() => {setCurrentPage('services'); setMobileMenuOpen(false); setShowAuthModal(false);}} className="block w-full text-left text-gray-700 font-medium hover:text-blue-600 transition">Services</button>
-            <button onClick={() => {setCurrentPage('Products'); setMobileMenuOpen(false); setShowAuthModal(false);}} className="block w-full text-left text-gray-700 font-medium hover:text-blue-600 transition">Products</button>
-            <button onClick={() => {setCurrentPage('contact'); setMobileMenuOpen(false); setShowAuthModal(false);}} className="block w-full text-left text-gray-700 font-medium hover:text-blue-600 transition">Contact</button>
-            
-            {isLoggedIn ? (
-              <div className="pt-4 border-t border-blue-200">
-                <p className="text-sm font-semibold text-gray-900 mb-3">Welcome, {loggedInUser.name}!</p>
-                <button onClick={handleLogout} className="w-full px-4 py-2 bg-red-500 text-white rounded-lg font-semibold hover:bg-red-600 transition text-sm">
-                  Logout
-                </button>
+      {/* Why Choose SolvMate Section */}
+      <div className="relative py-20 px-6 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-16 text-gray-900">
+            Why Choose SolvMate
+          </h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: Zap,
+                title: "Sales Engineering",
+                desc: "Proven frameworks that turn leads into revenue",
+              },
+              {
+                icon: BarChart3,
+                title: "Strategic Operation Management",
+                desc: "Streamline operations with cutting-edge methodologies that drive sustainable growth.",
+              },
+              {
+                icon: Users,
+                title: "End-to-End Coordination",
+                desc: "Seamless project management from conception to execution, ensuring every stakeholder is aligned.",
+              },
+              {
+                icon: Target,
+                title: "Strategic Problem Solving",
+                desc: "We tackle your most complex business challenges with data-driven strategies and innovative thinking.",
+              },
+              {
+                icon: TrendingUp,
+                title: "Beta Analysis of Sales Funnel",
+                desc: "Deep-dive analytics into your sales pipeline to identify bottlenecks and optimize conversion rates.",
+              },
+              {
+                icon: Cog,
+                title: "Resource Planning",
+                desc: "Optimize your resource allocation with precision planning that maximizes efficiency and ROI.",
+              },
+            ].map((feature, i) => (
+              <div
+                key={i}
+                className="group backdrop-blur-xl bg-white border border-blue-200 p-8 rounded-xl hover:bg-blue-50 hover:border-blue-400 hover:shadow-lg transition shadow-md"
+              >
+                <feature.icon className="w-12 h-12 mb-4 group-hover:scale-110 transition relative z-10 text-blue-900" />
+                <h3 className="text-xl font-semibold mb-2 relative z-10 text-gray-900">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-700 relative z-10">{feature.desc}</p>
               </div>
-            ) : (
-              <button onClick={() => {setShowAuthModal(true); setMobileMenuOpen(false);}} className="w-full px-4 py-2 bg-gradient-to-br from-blue-900 to-blue-800 text-white rounded-lg font-semibold hover:from-blue-800 hover:to-blue-700 transition text-sm">
-                Sign In
-              </button>
-            )}
+            ))}
           </div>
-        )}
-      </nav>
-
-      {currentPage === 'home' && (
-       <HomePage setCurrentPage={setCurrentPage} />
-      )}
-
-      {currentPage === 'about' && (
-        <AboutPage />
-      )}
-
-      {currentPage === 'services' && (
-        <ServicePage />
-      )}
-
-      {currentPage === 'contact' && (
-        <ContactPage />
-      )}
-
-      {currentPage === 'Products' && (
-        <ProductPage />
-      )} 
-
-
-      <footer className="border-t border-blue-200 py-12 px-6 backdrop-blur-xl bg-white/60">
-        <div className="max-w-7xl mx-auto text-center text-gray-600">
-          <p>&copy; 2024 SolvMate. All rights reserved.</p>
         </div>
-      </footer>
+      </div>
 
-      {showAuthModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div 
-            className="absolute inset-0 bg-black/20 backdrop-blur-lg"
-            onClick={() => setShowAuthModal(false)}
-          ></div>
+      {/* Our Impact Section */}
+      <div className="mx-20 rounded-3xl mb-20 py-20 bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 px-6 overflow-hidden flex items-center">
+        {/* Background pattern */}
+        <div className="absolute inset-0 overflow-hidden opacity-10">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
+          <div className="absolute top-0 right-1/4 w-96 h-96 bg-cyan-500 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000" />
+          <div className="absolute -bottom-8 left-1/2 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000" />
+        </div>
 
-          <div className="relative backdrop-blur-2xl bg-white/30 border-2 border-white/40 rounded-3xl p-8 max-w-md w-full shadow-2xl animate-scale-in hover:bg-white/40 transition">
-            <button
-              onClick={() => setShowAuthModal(false)}
-              className="absolute top-6 right-6 text-blue-900 hover:text-blue-700 transition"
-            >
-              <X size={24} />
-            </button>
+        <div className="relative z-10 max-w-6xl mx-auto w-full">
+          <h2 className="text-5xl lg:text-6xl font-bold text-center mb-20 text-white">
+            Our Impact
+          </h2>
 
-            <div className="text-center space-y-2 mb-8">
-              <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto shadow-lg bg-gradient-to-br from-blue-900 to-blue-800">
-                <span className="text-white font-bold text-xl">SM</span>
-              </div>
-              <h2 className="text-3xl font-bold text-gray-900">SolvMate</h2>
-              <p className="text-sm text-gray-700">Grow with clarity</p>
-            </div>
-
-            {authMessage && (
-              <div className="mb-4 p-3 rounded-lg text-center text-sm font-medium" style={{backgroundColor: authMessage.includes('successful') ? 'rgba(34, 197, 94, 0.2)' : 'rgba(239, 68, 68, 0.2)', color: authMessage.includes('successful') ? '#166534' : '#991b1b'}}>
-                {authMessage}
-              </div>
-            )}
-
-            <div className="flex gap-3 mb-8 bg-white/20 p-1.5 rounded-full backdrop-blur-xl">
-              <button
-                onClick={() => {setIsSignIn(true); setAuthMessage(''); setFormData({ email: '', password: '', name: '' });}}
-                className={`flex-1 py-2.5 px-4 rounded-full font-semibold transition ${
-                  isSignIn
-                    ? 'bg-white/60 text-blue-900 shadow-lg'
-                    : 'text-gray-700 hover:text-gray-900'
-                }`}
-              >
-                Sign In
-              </button>
-              <button
-                onClick={() => {setIsSignIn(false); setAuthMessage(''); setFormData({ email: '', password: '', name: '' });}}
-                className={`flex-1 py-2.5 px-4 rounded-full font-semibold transition ${
-                  !isSignIn
-                    ? 'bg-white/60 text-blue-900 shadow-lg'
-                    : 'text-gray-700 hover:text-gray-900'
-                }`}
-              >
-                Register
-              </button>
-            </div>
-
-            <div className="space-y-4">
-              {!isSignIn && (
-                <div>
-                  <label className="block text-sm font-semibold text-gray-900 mb-2">Full Name</label>
-                  <input
-                    type="text"
-                    placeholder="John Doe"
-                    value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    className="w-full px-4 py-3 backdrop-blur-xl bg-white/40 border-2 border-white/50 rounded-2xl text-gray-900 placeholder:text-gray-500 focus:outline-none focus:border-white/80 focus:bg-white/60 transition"
-                  />
-                </div>
-              )}
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-2">Email Address</label>
-                <input
-                  type="email"
-                  placeholder="you@example.com"
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  className="w-full px-4 py-3 backdrop-blur-xl bg-white/40 border-2 border-white/50 rounded-2xl text-gray-900 placeholder:text-gray-500 focus:outline-none focus:border-white/80 focus:bg-white/60 transition"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-2">Password</label>
-                <div className="relative">
-                  <input
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="••••••••"
-                    value={formData.password}
-                    onChange={(e) => setFormData({...formData, password: e.target.value})}
-                    className="w-full px-4 py-3 backdrop-blur-xl bg-white/40 border-2 border-white/50 rounded-2xl text-gray-900 placeholder:text-gray-500 focus:outline-none focus:border-white/80 focus:bg-white/60 transition pr-10"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-3 text-gray-600 hover:text-gray-900 transition"
-                  >
-                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                  </button>
-                </div>
-              </div>
-
-              {isSignIn && (
-                <div className="flex items-center justify-between text-sm">
-                  <label className="flex items-center gap-2 text-gray-900 cursor-pointer">
-                    <input type="checkbox" className="w-4 h-4 rounded border-white/50 bg-white/30 accent-blue-900" />
-                    Remember me
-                  </label>
-                  <a href="#" className="text-blue-900 hover:text-blue-800 transition font-medium">Forgot password?</a>
-                </div>
-              )}
-
-              <button
-                onClick={handleSubmit}
-                className="w-full py-3 backdrop-blur-xl border-2 border-white/20 rounded-2xl font-semibold text-white hover:border-white/40 transition shadow-lg mt-6 bg-gradient-to-br from-blue-900 to-blue-800 hover:from-blue-800 hover:to-blue-700" 
-              >
-                {isSignIn ? 'Sign In' : 'Create Account'}
-              </button>
-
-              <p className="text-center text-sm text-gray-900">
-                {isSignIn ? "Don't have an account? " : 'Already have an account? '}
-                <button
-                  type="button"
-                  onClick={() => {setIsSignIn(!isSignIn); setAuthMessage('');}}
-                  className="text-blue-900 hover:text-blue-800 transition font-semibold"
-                >
-                  {isSignIn ? 'Register' : 'Sign In'}
-                </button>
+          <div className="grid md:grid-cols-3 gap-12">
+            {/* Impact Card 1 */}
+            <div className="text-center space-y-6">
+              <p className="text-7xl lg:text-8xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+               {daysInAction}
               </p>
+              <div className="space-y-2">
+                <p className="text-2xl font-semibold text-white">Days in Action</p>
+                <div className="h-1 w-20 rounded-full bg-gradient-to-r from-blue-400 to-cyan-400 mx-auto"></div>
+              </div>
+            </div>
+
+            {/* Impact Card 2 */}
+            <div className="text-center space-y-6">
+              <p className="text-7xl lg:text-8xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                7
+              </p>
+              <div className="space-y-2">
+                <p className="text-2xl font-semibold text-white">Happy Clients</p>
+                <div className="h-1 w-20 rounded-full bg-gradient-to-r from-blue-400 to-cyan-400 mx-auto"></div>
+              </div>
+            </div>
+
+            {/* Impact Card 3 */}
+            <div className="text-center space-y-6">
+              <p className="text-7xl lg:text-8xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                3+
+              </p>
+              <div className="space-y-2">
+                <p className="text-2xl font-semibold text-white">Geographies Served</p>
+                <div className="h-1 w-20 rounded-full bg-gradient-to-r from-blue-400 to-cyan-400 mx-auto"></div>
+              </div>
             </div>
           </div>
         </div>
-      )}
-
-      <style>{`
-        @keyframes blob {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          33% { transform: translate(30px, -50px) scale(1.1); }
-          66% { transform: translate(-20px, 20px) scale(0.9); }
-        }
-        .animate-blob {
-          animation: blob 7s infinite;
-        }
-        .animation-delay-2s {
-          animation-delay: 2s;
-        }
-        .animation-delay-4s {
-          animation-delay: 4s;
-        }
-        @keyframes scaleIn {
-          from {
-            opacity: 0;
-            transform: scale(0.95);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-        .animate-scale-in {
-          animation: scaleIn 0.3s ease-out;
-        }
-      `}</style>
-    </div>
+      </div>
+    </>
   );
 }
