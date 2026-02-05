@@ -75,14 +75,14 @@ export default function ProductPage() {
                 <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/20 via-transparent to-transparent pointer-events-none" />
 
                 <h3 className="text-2xl md:text-3xl font-semibold text-cyan-400 mb-1 relative z-10">
-                  Kannakilabs
+                  AI Research Lab
                 </h3>
                 <p className="text-gray-100 text-base md:text-lg leading-relaxed relative z-10">
                   Neuromorphic Computing R&D
                 </p>
                 <div className="pb-6 border-b border-white/10" />
                 <p className="text-gray-100 text-base md:text-lg leading-relaxed relative z-10 pt-4">
-                  {`Pioneering the future of computing at Kannakilabs. Our research and development division focuses on neuromorphic computing and next-generation AI technologies. We develop cutting-edge solutions that push the boundaries of what's possible in machine learning, cognitive computing, and intelligent systems.`}
+                  {`Pioneering the future of computing at AI Research. Our research and development division focuses on neuromorphic computing and next-generation AI technologies. We develop cutting-edge solutions that push the boundaries of what's possible in machine learning, cognitive computing, and intelligent systems.`}
                 </p>
               </div>
             </div>
