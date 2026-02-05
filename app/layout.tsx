@@ -1,6 +1,7 @@
 'use client'
 import './globals.css';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Open_Sans } from 'next/font/google';
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
@@ -28,28 +29,28 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <html lang="en" className={openSans.variable}>
-<body className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-blue-100 text-gray-900 overflow-x-hidden overflow-y-auto">
-      <div className="fixed inset-0 -z-10">
-        <div className="absolute top-20 left-10 w-96 h-96 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob bg-blue-900"></div>
-        <div className="absolute top-40 right-10 w-96 h-96 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-2s bg-blue-800"></div>
-        <div className="absolute bottom-1/2 left-1/3 w-80 h-80 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-4s bg-blue-900"></div>
-      </div>
+      <body className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-blue-100 text-gray-900 overflow-x-hidden overflow-y-auto">
+        <div className="fixed inset-0 -z-10">
+          <div className="absolute top-20 left-10 w-96 h-96 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob bg-blue-900"></div>
+          <div className="absolute top-40 right-10 w-96 h-96 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-2s bg-blue-800"></div>
+          <div className="absolute bottom-1/2 left-1/3 w-80 h-80 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-4s bg-blue-900"></div>
+        </div>
 
-      <nav className="fixed w-full top-0 z-50 backdrop-blur-xl bg-white/70 border-b border-blue-200/50">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg flex items-center justify-center backdrop-blur-md bg-gradient-to-br from-blue-900 to-blue-800">
-              <span className="text-white font-bold text-lg">SM</span>
+        <nav className="fixed w-full top-0 z-50 backdrop-blur-xl bg-white/70 border-b border-blue-200/50">
+          <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden">
+                <Image src="/logo.png" alt="SolvMate Logo" width={40} height={40} className="object-contain" />
+              </div>
+              <span className="font-bold text-xl text-blue-900">SolvMate</span>
             </div>
-            <span className="font-bold text-xl text-blue-900">SolvMate</span>
-          </div>
 
-          <div className="hidden md:flex items-center gap-8">
-            <Link href="/" className="text-gray-700 font-medium hover:text-blue-600 transition">
+            <div className="hidden md:flex items-center gap-8">
+              <Link href="/" className="text-gray-700 font-medium hover:text-blue-600 transition">
                 Home
               </Link>
               <Link href="/about" className="text-gray-700 font-medium hover:text-blue-600 transition">
@@ -64,19 +65,19 @@ export default function RootLayout({
               <Link href="/contact" className="text-gray-700 font-medium hover:text-blue-600 transition">
                 Contact
               </Link>
+            </div>
+
+            <button
+              className="md:hidden text-blue-900"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
 
-          <button 
-            className="md:hidden text-blue-900"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-
-        {mobileMenuOpen && (
-          <div className="md:hidden backdrop-blur-xl bg-white/70 border-t border-blue-200/50 p-4 space-y-4">
-            <Link href="/" onClick={() => setMobileMenuOpen(false)} className="block text-gray-700 font-medium hover:text-blue-600 transition">
+          {mobileMenuOpen && (
+            <div className="md:hidden backdrop-blur-xl bg-white/70 border-t border-blue-200/50 p-4 space-y-4">
+              <Link href="/" onClick={() => setMobileMenuOpen(false)} className="block text-gray-700 font-medium hover:text-blue-600 transition">
                 Home
               </Link>
               <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="block text-gray-700 font-medium hover:text-blue-600 transition">
@@ -91,22 +92,22 @@ export default function RootLayout({
               <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="block text-gray-700 font-medium hover:text-blue-600 transition">
                 Contact
               </Link>
-          </div>
-        )}
-      </nav>
+            </div>
+          )}
+        </nav>
 
-     {/* Page content */}
+        {/* Page content */}
         <main className="pt-24">
           {children}
         </main>
 
-      <footer className="border-t border-blue-200 backdrop-blur-xl bg-white/60">
-        <div className="mx-auto text-center text-gray-600">
-          <Footer />
-        </div>
-      </footer>
+        <footer className="border-t border-blue-200 backdrop-blur-xl bg-white/60">
+          <div className="mx-auto text-center text-gray-600">
+            <Footer />
+          </div>
+        </footer>
 
-      <style>{`
+        <style>{`
         @keyframes blob {
           0%, 100% { transform: translate(0, 0) scale(1); }
           33% { transform: translate(30px, -50px) scale(1.1); }
@@ -135,7 +136,7 @@ export default function RootLayout({
           animation: scaleIn 0.3s ease-out;
         }
       `}</style>
-    </body>
+      </body>
     </html>
   );
 }
