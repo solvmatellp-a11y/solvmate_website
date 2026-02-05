@@ -79,7 +79,7 @@ export default function Footer() {
             <h3 className="text-gray-900 text-lg font-medium">Contact</h3>
             <ul className="space-y-3 text-sm text-gray-900">
               <li>Chennai, India</li>
-              <li>+91 9962784977</li>
+              <li>+91 9360403705</li>
               <li>
                 <a
                   href="mailto:hello@solvmate.in"
