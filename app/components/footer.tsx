@@ -69,7 +69,7 @@ export default function Footer() {
                 Hiremate.in
               </li>
               <li className="text-gray-900 hover:text-cyan-500 transition cursor-default">
-                Kannakilabs
+                AI Research Lab
               </li>
             </ul>
           </div>
